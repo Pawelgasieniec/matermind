@@ -69,9 +69,7 @@ function main() {
 
 }
 function zgaduj() {
-    runda++;
-    getNextWord();
-    presentOurGuess();
+
     // rozgrywka
     if (zn > 0) {
         let tempZ = [];
@@ -107,6 +105,9 @@ function zgaduj() {
         }
         Z = tempZ;
         zn = i2;
+        runda++;
+        getNextWord();
+        presentOurGuess();
     }
 
 }
