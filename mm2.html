@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mastermind</title>
+
+
+  <script>
+
+    const instructions = `GRA MASTERMIND
+    Człowiek wymyśla 4-ro literowy kod zbudowany z liter od A do F. Następnie program stara się ten kod odgadnąć.
+    Prezentuje on swoje kody wraz z liczbą pozostałych. W odpowiedzi człowiek wprowadza oceny kodów, zbudowane z liter x
+    i o wg zasady:
+    • x – litera kodu programu odpowiada literze podawanego kodu co do rodzaju i co do położenia w kodzie
+    • o – litera kodu programu zgadza się z literą podawanego kodu tylko co do rodzaju (położona jest w innym
+      miejscu).
+    Litery x poprzedzają w ocenie litery o.
+
+    `;
+
+    function generateCombinations(zn) {
+      let Z = [];
+      for (let i = 0; i < zn; i++) {
+        Z[i] = "";
+        let i2 = i;
+        for (let j = 0; j < 4; j++) {
+          Z[i] += String.fromCharCode(65 + (i2 % 6));
+          i2 = Math.floor(i2 / 6);
+        }
+      }
+      return Z;
+    }
+
+
+
+    // Call main function to start the game
+    function main() {
+      // tworzymy zbiór Z
+      let zn = 1296;
+      let maxRounds = 8;
+      let Z = generateCombinations(zn);
+      // exit;
+      console.log("Z length:" + Z.length)
+      let skoder, slamacz, sklucz, sklucz2, sl;
+      let i, i1, i2, j, runda;
+
+      // rozgrywka
+      for (runda = 1; runda <= maxRounds; runda++) {
+        if (zn > 0) {
+          i2 = Math.floor(Math.random() * zn);
+          slamacz = Z[i2];
+
+          // usuwamy wylosowane s³owo ze zbioru Z
+          Z.splice(i2, 1);
+          zn--;
+          // wylosowane s³owo prezentujemy cz³owiekowi
+          // i odczytujemy kod klucza
+          sklucz = prompt(instructions + "Runda " + runda + ": " + slamacz + " " + zn + ", Oceń rozwiązanie: ");
+          document.write("Runda " + runda + ": " + slamacz + " " + zn + ": " + sklucz + "<br/>");
+          // analizujemy dane
+          if (sklucz === "xxxx") {
+            alert("Łamacz odgadł Kod (" + slamacz + ") w " + runda + " rundzie")
+            break;
+          }
+          let tempZ = [];
+          // ze zbioru Z wyrzucamy nie pasujace kody
+          for (i2 = i1 = 0; i1 < zn; i1++) {
+            skoder = Z[i1];
+            sl = slamacz;
+            console.log("sl: " + sl)
+            sklucz2 = "";
+            for (i = 0; i < 4; i++) {
+              if (skoder[i] === slamacz[i]) {
+                sklucz2 += 'x';
+                skoder = skoder.substring(0, i) + '#' + skoder.substring(i + 1); // wartownik w1
+                sl = sl.substring(0, i) + '$' + sl.substring(i + 1); // wartownik w2
+
+              }
+            }
+            for (i = 0; i < 4; i++) {
+              if (skoder[i] !== '#') {
+                for (j = 0; j < 4; j++) {
+                  if (skoder[i] === sl[j]) {
+                    sklucz2 += 'o';
+                    sl = sl.substring(0, j) + '$' + sl.substring(j + 1); // wartownik w2
+                    break;
+                  }
+                }
+              }
+            }
+            if (sklucz === sklucz2) {
+              tempZ[i2] = Z[i1];
+              i2++;
+            }
+          }
+          Z = tempZ;
+          zn = i2;
+        } else {
+          console.log("No more words")
+          break;
+        }
+      }
+      if (sklucz != "xxxx") {
+        if (runda == maxRounds) {
+          alert("Kod nie został odgadnięty w " + maxRounds + " rundach")
+        } else {
+          alert("Po " + runda + " rundach nie ma pasujących kombinacji. Czyżby użytkownik oszukiwał?")
+        }
+      }
+      console.log("Game over")
+
+      
+    }
+    main();
+  </script>
+</head>
+
+
+<body=>
+  
+</body>
+
+
+
+</html>

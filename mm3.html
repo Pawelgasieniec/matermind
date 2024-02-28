@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mastermind</title>
+
+
+
+</head>
+<style>
+  body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  .results{
+    white-space: pre;
+    font-family:'Courier New', Courier, monospace; 
+    background-color: aliceblue; width: 45rem;
+  }
+</style>
+
+<body>
+  <h1>GRA MASTERMIND</h1>
+  <div>
+    <p>
+      Człowiek wymyśla 4-ro literowy kod zbudowany z liter od A do F. Następnie program stara się ten kod odgadnąć.
+      Prezentuje on swoje kody wraz z liczbą pozostałych. W odpowiedzi człowiek wprowadza oceny kodów, zbudowane z liter
+      'x' i 'o' wg zasady:
+    <ul>
+      <li>x – litera kodu programu odpowiada literze podawanego kodu co do rodzaju i co do położenia w kodzie</li>
+      <li>o – litera kodu programu zgadza się z literą podawanego kodu tylko co do rodzaju (położona jest w innym
+        miejscu).</li>
+    </ul>
+    Litery x poprzedzają w ocenie litery o.
+    </p>
+  </div>
+  <div>
+    <p><button onClick="window.location.reload();">Zacznij od nowa</button></p>
+  </div>
+
+  <form id="userFeedbackForm">
+    <div>
+      <label for="userFeedbackInput" name="userFeedbackLabel" , id="userFeedbackLabel">Oceń odpowiedź</label>
+      <input type="text" id="userFeedbackInput" name="userFeedbackInput" maxlength="4" pattern="x|o|xx|xo|oo|xxx|xxo|xoo|ooo|xxxx|xxxo|xxoo|xooo|oooo"
+        >
+      <button type="submit">OK</button>
+    </div>
+  </form>
+  <div>
+    <p name="results" id="results" class="results">
+    </p>
+  </div>
+  <script src="mastermind.js" defer></script>
+</body>
+
+
+
+</html>
